@@ -10,10 +10,11 @@ app.controller('customersCtrl', function($scope) {
 			$scope.links = results.urlList;
 			$scope.$apply();
 		}
+
+		console.log(results);
 	});
 
-	$scope.addURL = function()
-	{
+	$scope.addURL = function() {
 		chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT}, function (tabs){
 			var newUrl = {};
 			newUrl.address = tabs[0].url;
@@ -22,8 +23,7 @@ app.controller('customersCtrl', function($scope) {
 		});
 	}
 
-	$scope.expand = function()
-	{
+	$scope.expand = function() {
 		var arrayLength = $scope.links.length;
 
 		for(var i = 0; i < arrayLength; i++)
@@ -34,13 +34,18 @@ app.controller('customersCtrl', function($scope) {
 		}
 	}
 
-	$scope.saveList = function()
-	{
+	$scope.saveList = function() {
 		chrome.storage.local.set({'urlList': $scope.links});
+
+		chrome.storage.local.get('urlList', function (results) {
+			
+			console.log(results);
+		});
+
+
 	}
 
-	$scope.clearList = function()
-	{
+	$scope.clearList = function() {
 		$scope.links = [];
 	}
 });

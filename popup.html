@@ -1,32 +1,32 @@
 <!doctype html>
 <html>
-  <title>TODO Title</title>
-  <script type="text/javascript" src="scripts/angular.js"> </script>
-  <script type="text/javascript" src="app.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  
-  <body>  
-    <div ng-app="myApp" ng-controller="customersCtrl">
-      <div style="width:1000px;" class="container"></div>
+<head>
+	<title>TODO Title</title>
+	<script type="text/javascript" src="scripts/angular.js"> </script>
+	<script type="text/javascript" src="app.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>  
+	<div ng-app="myApp" ng-controller="customersCtrl">
+		<div style="width:1000px;" class="container"></div>
 
-      <div class="container">
-        <button ng-click="addURL()"     type="button" class="btn btn-primary pull-left">Add to List</button>
-        <button ng-click="expand()"   type="button" class="btn btn-primary pull-right">Expand Tabs</button>
-      </div>
+		<div class="container">
+			<button ng-click="addURL()"   type="button" class="btn btn-primary pull-left">Add to List</button>
+			<button ng-click="expand()"   type="button" class="btn btn-primary pull-right">Expand Tabs</button>
+		</div>
 
-      <div class="container">
-        <table>
-          <tr ng-repeat="x in links">
-            <td>{{ x.address }}</td>
-          </tr>
-        </table>
-    </div>
+		<div class="container">
+			<table>
+				<tr ng-repeat="x in links">
+					<td>{{ x.address }}</td>
+				</tr>
+			</table>
+		</div>
 
-    <div class="container">
-        <button ng-click="saveList()"   type="button" class="btn btn-success pull-right">Save List</button>
-        <button ng-click="expand()"     type="button" class="btn btn-danger pull-left">Clear List</button>
-    </div>
-
-    <div class="container"></div>
-  </body>
+		<div class="container">
+			<button ng-click="saveList()"   type="button" class="btn btn-success pull-right">Save List</button>
+			<button ng-click="clearList()"     type="button" class="btn btn-danger pull-left">Clear List</button>
+		</div>
+	</div>
+</body>
 </html>
