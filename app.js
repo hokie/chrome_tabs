@@ -1,51 +1,48 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ui.grid']);
 
 app.controller('customersCtrl', function($scope) {
 
-	$scope.links = [];
+
+	$scope.gridOptions = {
+		columnDefs: [
+      		{ field: 'delete' },
+      		{ field: 'address' }],
+  		data: []
+	};
 
 	chrome.storage.local.get('urlList', function (results) {
 		if (results.urlList)
 		{
-			$scope.links = results.urlList;
+			$scope.gridOptions.data = results.urlList;
 			$scope.$apply();
 		}
-
-		console.log(results);
 	});
 
 	$scope.addURL = function() {
 		chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT}, function (tabs){
 			var newUrl = {};
 			newUrl.address = tabs[0].url;
-			$scope.links.push(newUrl);
+			$scope.gridOptions.data.push(newUrl);
 			$scope.$apply();
 		});
 	}
 
 	$scope.expand = function() {
-		var arrayLength = $scope.links.length;
+		var arrayLength = $scope.gridOptions.data.length;
 
 		for(var i = 0; i < arrayLength; i++)
 		{
 			var createProperties = {};
-			createProperties.url = $scope.links[i].address;
+			createProperties.url = $scope.gridOptions.data[i].address;
 			chrome.tabs.create(createProperties);
 		}
 	}
 
 	$scope.saveList = function() {
-		chrome.storage.local.set({'urlList': $scope.links});
-
-		chrome.storage.local.get('urlList', function (results) {
-			
-			console.log(results);
-		});
-
-
+		chrome.storage.local.set({'urlList': $scope.gridOptions.data});
 	}
 
 	$scope.clearList = function() {
-		$scope.links = [];
+		$scope.gridOptions.data = [];
 	}
 });
