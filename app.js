@@ -5,12 +5,13 @@ app.controller('customersCtrl', function($scope) {
 
 	$scope.gridOptions = {
 		columnDefs: [
-      		{ field: 'delete' },
-      		{ field: 'address' }],
+      		{ field: 'delete', width: 35, headerCellTemplate: '<div style="height:0px;"></div>', cellTemplate: 
+      			'<button class="btn btn-link" ng-click="grid.appScope.deleteRow(row)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>' },
+      		{ field: 'address', headerCellTemplate: '<div style="height:0px;"></div>',}],
   		data: []
 	};
 
-	chrome.storage.local.get('urlList', function (results) {
+	chrome.storage.sync.get('urlList', function (results) {
 		if (results.urlList)
 		{
 			$scope.gridOptions.data = results.urlList;
@@ -39,10 +40,15 @@ app.controller('customersCtrl', function($scope) {
 	}
 
 	$scope.saveList = function() {
-		chrome.storage.local.set({'urlList': $scope.gridOptions.data});
+		chrome.storage.sync.set({'urlList': $scope.gridOptions.data});
 	}
 
 	$scope.clearList = function() {
 		$scope.gridOptions.data = [];
 	}
+
+	$scope.deleteRow = function(row) {
+    	var index = $scope.gridOptions.data.indexOf(row.entity);
+    	$scope.gridOptions.data.splice(index, 1);
+  	};
 });
