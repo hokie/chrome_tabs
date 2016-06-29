@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Tabsplode",
+  "name": "Tabs",
   "description": "This extension opens lists of websites in seperate tabs",
   "version": "0.0.1",
 
