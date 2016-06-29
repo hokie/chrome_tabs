@@ -1,8 +1,6 @@
-var app = angular.module('myApp', ['ui.grid']);
+var app = angular.module('tabs', ['ui.grid']);
 
-app.controller('customersCtrl', function($scope) {
-
-
+app.controller('tabsCtrl', function($scope) {
 	$scope.gridOptions = {
 		columnDefs: [
       		{ field: 'delete', width: 35, headerCellTemplate: '<div style="height:0px;"></div>', cellTemplate: 
@@ -21,9 +19,13 @@ app.controller('customersCtrl', function($scope) {
 
 	$scope.addURL = function() {
 		chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT}, function (tabs){
-			var newUrl = {};
-			newUrl.address = tabs[0].url;
+			var newUrl = {
+				address: tabs[0].url
+			};
+
 			$scope.gridOptions.data.push(newUrl);
+			chrome.storage.sync.set({'urlList': $scope.gridOptions.data});
+			
 			$scope.$apply();
 		});
 	}
@@ -39,16 +41,10 @@ app.controller('customersCtrl', function($scope) {
 		}
 	}
 
-	$scope.saveList = function() {
-		chrome.storage.sync.set({'urlList': $scope.gridOptions.data});
-	}
-
-	$scope.clearList = function() {
-		$scope.gridOptions.data = [];
-	}
-
 	$scope.deleteRow = function(row) {
     	var index = $scope.gridOptions.data.indexOf(row.entity);
-    	$scope.gridOptions.data.splice(index, 1);
+    	$scope.gridOptions.data.splice(index, 1);				//fix this
+
+    	chrome.storage.sync.set({'urlList': $scope.gridOptions.data});
   	};
 });
